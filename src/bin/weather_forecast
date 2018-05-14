@@ -1,0 +1,35 @@
+#!/usr/bin/env python
+"""
+weather forecast entrypoint
+"""
+
+import argparse
+import logging
+
+import supertool
+
+ROOT_LOGGER = logging.getLogger()
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Gives weather forecast for city')
+
+    parser.add_argument('location', type=str, help='target location (city)')
+    parser.add_argument('--days', type=str, help='number of days forecast needed')
+
+    args = parser.parse_args()
+
+    if args.days:
+        try:
+            cnt = int(args.days)
+        except ValueError:
+            print("Number of days must be an integer")
+    else:
+        cnt = 14
+
+    print('Searching for forecast in %s' % args.location)
+    print('Please, wait...')
+    try:
+        supertool.weather.nominatim_weather_daily(args.location, token_id='1b0ca47d89658cde3cc64234f71e0fc7', cnt=cnt)
+    except NameError:
+        print('Something wrong with arguments, please check')
+    print('--- Job done ---')
