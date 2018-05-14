@@ -22,7 +22,7 @@ def extract_requirements(file):
 setup(
     name='supertool-distro',
     version='0.1',
-    description='super-super tool',
+    description='super-super tool. Instruments: similar files, weather, calculator with ''python window.py'' command',
     author='Ich',
     author_email='elena@gmail.com',
     license='MIT',
