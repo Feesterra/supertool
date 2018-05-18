@@ -25,13 +25,13 @@ def formating(i):
     """
 
     if i[0] == 'temp' or i[0] == 'temp_min' or i[0] == 'temp_max':
-        print('{}: {:.2f}ºС'.format(i[0], kelv_to_cels(i[1])))
+        return '{}: {:.2f}ºС'.format(i[0], kelv_to_cels(i[1]))
     elif i[0] == 'humidity':
-        print('{}: {}%'.format(i[0], i[1]))
+        return '{}: {}%'.format(i[0], i[1])
     elif i[0] == 'pressure':
-        print('{}: {} hPa'.format(i[0], i[1]))
+        return '{}: {} hPa'.format(i[0], i[1])
     else:
-        print('{}: {}'.format(i[0], i[1]))
+        return '{}: {}'.format(i[0], i[1])
 
 
 def weather(location, token_id):
@@ -159,11 +159,13 @@ def nominatim_weather_daily(location, token_id, cnt):
      :type cnt: int
      :returns: None. Prints weather data.
      """
+
     if cnt > 16 or cnt < 1:
         raise ValueError("Weather forecast may be provided for up to 16 days")
     if type(location) == str:
         nom = Nominatim()
         coordinates = nom.query(location)
+        output = ''
 
         if coordinates:
             lat = coordinates[0]['lat']
@@ -186,13 +188,14 @@ def nominatim_weather_daily(location, token_id, cnt):
                 raise NameError('You have inputted invalid token id!')
             else:
                 if location != data['list'][0]['name']:
-                    print('Weather for {} in {}'.format(location, data['list'][0]['name']))
+                    output += 'Weather for {} in {}\n'.format(location, data['list'][0]['name'])
                 else:
-                    print('Weather in {} for {} days'.format(location, data['count']))
+                    output += 'Weather in {} for {} days\n'.format(location, data['count'])
                 for i in range(cnt):
-                    print('Weather for day {}: {}'.format(i + 1, data['list'][i]['weather'][0]['description']))
+                    output += 'Weather for day {}: {}\n'.format(i + 1, data['list'][i]['weather'][0]['description'])
                     for j in data['list'][i]['main'].items():
-                        formating(j)
+                        output += (formating(j) + '\n')
+            return output
         else:
             raise NameError('no such location found!')
     else:

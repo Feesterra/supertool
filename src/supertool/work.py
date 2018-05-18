@@ -35,10 +35,14 @@ def get_md5(filename):
 def print_similar():
     """Выводит на консоль количество одинаковых файлов (не по названию, а по содержимому) и их пути"""
 
-    print("Найдено одинаковых файлов: \n")
+    count = 0
+
     for key, value in hashes.items():
         if len(value) > 1:
-            print('{} штук:\t{}'.format(len(value), ', '.join(value)))
+            count += 1
+            return 'Найдено одинаковых файлов: \n{} штук:\t{}'.format(len(value), ', '.join(value))
+    if count == 0:
+        return 'Одинаковых файлов не найдено.'
 
 
 def find_duplicates(path):
@@ -48,13 +52,14 @@ def find_duplicates(path):
     """
 
     if os.path.exists(path):
-        for filename in get_full_filenames(path):
-            hash = get_md5(filename)
-            if hash not in hashes.keys():
-                hashes[hash] = [filename]
-            else:
-                hashes[hash].append(filename)
-        print_similar()
+        if not hashes:
+            for filename in get_full_filenames(path):
+                hash = get_md5(filename)
+                if hash not in hashes.keys():
+                    hashes[hash] = [filename]
+                else:
+                    hashes[hash].append(filename)
+            return print_similar()
     else:
         raise Exception('{} неверный путь'.format(path))
 

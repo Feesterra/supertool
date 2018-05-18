@@ -22,7 +22,8 @@ def extract_requirements(file):
 setup(
     name='supertool-distro',
     version='0.1',
-    description='super-super tool. Instruments: similar files, weather, calculator with ''python window.py'' command',
+    description='super-super tool. Instruments: similar files (gui is called by ''gui_similar.py'' command, '
+                'weather (gui is called by ''weather_gui.py'' command, calculator with ''python window.py'' command',
     author='Ich',
     author_email='elena@gmail.com',
     license='MIT',
@@ -34,8 +35,7 @@ setup(
     install_requires=extract_requirements(os.path.join(DISTRO_ROOT_PATH, 'requirements', 'base.txt')),
     test_requires = extract_requirements(os.path.join(DISTRO_ROOT_PATH, 'requirements', 'test.txt')),
     test_suite='nose.collector',
-    scripts=[os.path.join('bin', 'similar_files'), os.path.join('bin', 'weather_forecast')]
-
-
+    scripts=[os.path.join('bin', 'similar_files'), os.path.join('bin', 'weather_forecast'),
+             os.path.join('supertool', 'gui_similar.py'), os.path.join('supertool', 'weather_gui.py')]
 
 )

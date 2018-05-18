@@ -29,7 +29,8 @@ if __name__ == '__main__':
     print('Searching for forecast in %s' % args.location)
     print('Please, wait...')
     try:
-        supertool.weather.nominatim_weather_daily(args.location, token_id='1b0ca47d89658cde3cc64234f71e0fc7', cnt=cnt)
+        print(supertool.weather.nominatim_weather_daily(args.location,
+                                                        token_id='1b0ca47d89658cde3cc64234f71e0fc7', cnt=cnt))
     except NameError:
         print('Something wrong with arguments, please check')
     print('--- Job done ---')
